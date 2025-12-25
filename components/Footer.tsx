@@ -45,6 +45,7 @@ const Footer: React.FC = () => {
 
         <div className="pt-8 border-t border-[#143D30]/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-[#143D30]/40">
           <p>&copy; 2024 Soul Garden Sound. All rights reserved.</p>
+          <p>Made with ❤️ by your friend</p>
           <div className="flex space-x-8">
             <a href="#" className="hover:underline">Privacy Policy</a>
             <a href="#" className="hover:underline">Terms of Service</a>
