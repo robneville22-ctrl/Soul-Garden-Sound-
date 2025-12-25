@@ -55,7 +55,7 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: '2',
     name: 'David L.',
-    text: "The Intuitive Reiki session was a breakthrough. Cleo has a gift for identifying exactly where energy is stagnant.",
+    text: "The Intuitive Reiki session was a breakthrough. The practitioner has a gift for identifying exactly where energy is stagnant.",
     role: 'New Client'
   },
   {

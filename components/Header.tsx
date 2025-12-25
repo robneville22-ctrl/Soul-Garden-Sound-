@@ -10,7 +10,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#FFFDF5]/80 backdrop-blur-md border-b border-[#143D30]/10">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         <div className="text-2xl font-serif font-bold tracking-tight text-[#143D30]">
-          CLEO <span className="font-light italic">Aura</span>
+          Soul <span className="font-light italic">Garden Sound</span>
         </div>
 
         <nav className="hidden md:flex items-center space-x-8 text-xs font-bold uppercase tracking-[0.2em] text-[#143D30]">
