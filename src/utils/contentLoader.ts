@@ -2,9 +2,9 @@ import matter from 'gray-matter';
 import { Service, WellnessEvent, Testimonial } from '../types';
 
 // Import all markdown files
-const serviceFiles = import.meta.glob('../content/services/*.md', { eager: true, as: 'raw' });
-const eventFiles = import.meta.glob('../content/events/*.md', { eager: true, as: 'raw' });
-const testimonialFiles = import.meta.glob('../content/testimonials/*.md', { eager: true, as: 'raw' });
+const serviceFiles = import.meta.glob('../content/services/*.md', { eager: true, query: '?raw', import: 'default' });
+const eventFiles = import.meta.glob('../content/events/*.md', { eager: true, query: '?raw', import: 'default' });
+const testimonialFiles = import.meta.glob('../content/testimonials/*.md', { eager: true, query: '?raw', import: 'default' });
 
 /**
  * Safely parse price string to number
