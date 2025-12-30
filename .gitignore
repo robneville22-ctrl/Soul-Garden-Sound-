@@ -25,6 +25,4 @@ dist-ssr
 
 # TinaCMS
 .env
-.tina/__generated__
-tina/__generated__
 public/admin

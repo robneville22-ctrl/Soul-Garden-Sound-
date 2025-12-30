@@ -1,0 +1,27 @@
+fragment ServiceParts on Service {
+  __typename
+  name
+  tagline
+  price
+  duration
+  image
+  description
+}
+
+fragment EventParts on Event {
+  __typename
+  name
+  teaser
+  price
+  date
+  location
+  capacity
+  image
+}
+
+fragment TestimonialParts on Testimonial {
+  __typename
+  name
+  text
+  role
+}
