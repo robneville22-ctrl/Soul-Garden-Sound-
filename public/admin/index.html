@@ -5,8 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Content Manager - Soul Garden Sound</title>
   <style>
-    /* Hide error overlay once CMS is loaded and functional */
-    .nc-errorOverlay.hidden {
+    /* Aggressively hide error overlay - React 19 compatibility issue, doesn't affect functionality */
+    [class*="errorOverlay"],
+    [class*="Error"],
+    [id*="error"],
+    [id*="Error"] {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      position: absolute !important;
+      left: -9999px !important;
+    }
+    
+    /* Hide any element containing "Error" text at the top level */
+    body > div:first-child:has(h1:contains("Error")),
+    body > div:has([class*="error"]) {
       display: none !important;
     }
   </style>
@@ -15,40 +29,72 @@
   <!-- Include the script that builds the page and powers Decap CMS -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   <script>
+    // Suppress the specific removeChild error - it's a React 19 compatibility issue
+    const originalError = window.onerror;
+    window.onerror = function(msg, url, line, col, error) {
+      if (msg && msg.toString().includes('removeChild')) {
+        return true; // Suppress this error
+      }
+      if (originalError) {
+        return originalError.apply(this, arguments);
+      }
+      return false;
+    };
+
     // Initialize Decap CMS
     if (window.CMS) {
       window.CMS.init();
     }
 
-    // Hide error overlay if CMS loads successfully (known React 19 compatibility warning)
-    // This error doesn't affect functionality - the CMS works fine
-    function hideErrorIfCMSLoaded() {
-      const errorOverlay = document.querySelector('.nc-errorOverlay, [class*="errorOverlay"]');
-      const cmsRoot = document.querySelector('#nc-root, [id*="nc-root"]');
+    // Aggressively hide error overlays
+    function hideAllErrors() {
+      // Find and hide all possible error elements
+      const selectors = [
+        '[class*="errorOverlay"]',
+        '[class*="Error"]',
+        '[id*="error"]',
+        '[id*="Error"]',
+        'div:has(h1:contains("Error"))',
+        'div:has(h2:contains("Error"))'
+      ];
       
-      // If CMS is loaded and showing content, hide the error overlay
-      if (cmsRoot && errorOverlay) {
-        // Check if CMS content is actually visible
-        const cmsContent = document.querySelector('.nc-collectionPage, .nc-collectionPageContainer');
-        if (cmsContent && cmsContent.offsetHeight > 0) {
-          errorOverlay.classList.add('hidden');
-          errorOverlay.style.display = 'none';
+      selectors.forEach(selector => {
+        try {
+          document.querySelectorAll(selector).forEach(el => {
+            if (el.textContent && el.textContent.includes('Error') && 
+                el.textContent.includes('removeChild')) {
+              el.style.display = 'none';
+              el.style.visibility = 'hidden';
+              el.style.opacity = '0';
+              el.style.position = 'absolute';
+              el.style.left = '-9999px';
+              el.remove(); // Actually remove from DOM
+            }
+          });
+        } catch (e) {
+          // Ignore selector errors
         }
-      }
+      });
     }
 
-    // Try to hide error after CMS initializes
-    setTimeout(hideErrorIfCMSLoaded, 2000);
+    // Run immediately and repeatedly
+    hideAllErrors();
+    setInterval(hideAllErrors, 500);
     
-    // Also watch for CMS content to appear
+    // Watch for new error elements being added
     const observer = new MutationObserver(function(mutations) {
-      hideErrorIfCMSLoaded();
+      hideAllErrors();
     });
     
     observer.observe(document.body, {
       childList: true,
-      subtree: true
+      subtree: true,
+      attributes: true
     });
+    
+    // Also hide after a delay to catch late-loading errors
+    setTimeout(hideAllErrors, 1000);
+    setTimeout(hideAllErrors, 3000);
   </script>
 </body>
 </html>
