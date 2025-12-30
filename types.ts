@@ -7,6 +7,7 @@ export interface Service {
   duration: string;
   image: string;
   description: string;
+  icon?: string;
 }
 
 export interface WellnessEvent {
