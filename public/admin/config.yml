@@ -3,7 +3,7 @@ backend:
   repo: robneville22-ctrl/Soul-Garden-Sound-
   branch: main
   base_url: https://soul-garden-sound.vercel.app
-  auth_endpoint: /api/auth
+  auth_endpoint: api/auth
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
