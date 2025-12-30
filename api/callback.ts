@@ -31,7 +31,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: tokenData.error_description });
     }
 
-    // Return success page with token
+    // Return success page with token in the correct format for Decap CMS
     const html = `
       <!DOCTYPE html>
       <html>
@@ -43,14 +43,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             (function() {
               function receiveMessage(e) {
                 console.log("receiveMessage %o", e);
+                // Send success message with token and provider
                 window.opener.postMessage(
-                  'authorization:github:success:${JSON.stringify(tokenData)}',
+                  'authorization:github:success:' + JSON.stringify({
+                    token: '${tokenData.access_token}',
+                    provider: 'github'
+                  }),
                   e.origin
                 );
                 window.removeEventListener("message", receiveMessage, false);
               }
               window.addEventListener("message", receiveMessage, false);
-              console.log("Sending message: %o", "github");
+              console.log("Sending authorizing message");
               window.opener.postMessage("authorizing:github", "*");
             })();
           </script>
