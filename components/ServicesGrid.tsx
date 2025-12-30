@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { SERVICES } from '../lib/loadContent';
+import { SERVICES } from '../constants';
 import { Clock, DollarSign } from 'lucide-react';
 
 const ServicesGrid: React.FC = () => {
