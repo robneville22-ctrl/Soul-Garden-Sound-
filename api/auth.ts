@@ -20,10 +20,10 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
 
   // Generate a state parameter for CSRF protection (optional but recommended)
   const stateParam = req.query.state;
-  const state = typeof stateParam === 'string' 
+  const state: string = typeof stateParam === 'string' 
     ? stateParam 
-    : Array.isArray(stateParam) 
-      ? stateParam[0] 
+    : Array.isArray(stateParam) && stateParam.length > 0
+      ? String(stateParam[0])
       : Math.random().toString(36).substring(7);
   
   // Build authorization URL
