@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { TESTIMONIALS } from '../constants';
+import { TESTIMONIALS } from '../lib/loadContent';
 import { Quote } from 'lucide-react';
 
 const SocialProof: React.FC = () => {

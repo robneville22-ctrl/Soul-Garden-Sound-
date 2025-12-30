@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { EVENTS } from '../constants';
+import { EVENTS } from '../lib/loadContent';
 import { Calendar, MapPin, Ticket } from 'lucide-react';
 
 const EventsGrid: React.FC = () => {
