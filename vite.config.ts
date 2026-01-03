@@ -12,16 +12,19 @@ export default defineConfig(({ mode }) => {
       plugins: [react()],
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
+        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+        'global': 'globalThis',
       },
       resolve: {
         alias: {
           '@': path.resolve(__dirname, '.'),
+          'buffer': 'buffer',
         }
       },
       assetsInclude: ['**/*.md'],
       optimizeDeps: {
-        exclude: ['gray-matter']
+        exclude: ['gray-matter'],
+        include: ['buffer']
       }
     };
 });
