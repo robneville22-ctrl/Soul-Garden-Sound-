@@ -2,7 +2,7 @@ import matter from 'gray-matter';
 import { Service, WellnessEvent, Testimonial, SiteSettings } from '../types';
 
 // Import all markdown files
-// Try both old and new syntax for compatibility
+// Use ?raw query to import as raw strings
 const serviceFiles = import.meta.glob('../content/services/*.md', { 
   eager: true, 
   query: '?raw',
@@ -26,6 +26,12 @@ const siteSettingsFile = import.meta.glob('../content/site-settings.md', {
   query: '?raw',
   import: 'default'
 }) as Record<string, any>;
+
+// Debug: Log what we're getting
+if (typeof window !== 'undefined') {
+  console.log('Service files loaded:', Object.keys(serviceFiles).length);
+  console.log('Event files loaded:', Object.keys(eventFiles).length);
+}
 
 /**
  * Safely parse price string to number
