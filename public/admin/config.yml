@@ -27,6 +27,44 @@ collections:
         fields:
           - {label: "Hero Image", name: "hero_image", widget: "image", required: true, hint: "Main image displayed below 'Start Your Journey' button"}
           - {label: "Hero Image Alt Text", name: "hero_image_alt", widget: "string", required: false, default: "Serene Wellness Atmosphere", hint: "Description of the hero image for accessibility"}
+          - {label: "Site Name", name: "site_name", widget: "string", required: true, hint: "Website name displayed in header"}
+          - {label: "Navigation - Benefits", name: "nav_benefits", widget: "string", required: true, hint: "Benefits navigation link text"}
+          - {label: "Navigation - Mission", name: "nav_mission", widget: "string", required: true, hint: "Mission navigation link text"}
+          - {label: "Navigation - Services", name: "nav_services", widget: "string", required: true, hint: "Services navigation link text"}
+          - {label: "Book Button Text", name: "book_button", widget: "string", required: true, hint: "Text for the booking button in header"}
+          - {label: "Headline Line 1", name: "hero_headline_line1", widget: "string", required: true, hint: "First line of main headline"}
+          - {label: "Headline Line 2", name: "hero_headline_line2", widget: "string", required: true, hint: "Second line of main headline (italicized)"}
+          - {label: "Hero Description", name: "hero_description", widget: "text", required: true, hint: "Subheading text below headline"}
+          - {label: "Hero Button Text", name: "hero_button", widget: "string", required: true, hint: "Text for main call-to-action button"}
+          - {label: "Pill Menu - Benefits", name: "hero_pill_benefits", widget: "string", required: true, hint: "Benefits link in floating pill menu"}
+          - {label: "Pill Menu - Mission", name: "hero_pill_mission", widget: "string", required: true, hint: "Mission link in floating pill menu"}
+          - {label: "Pill Menu - Services", name: "hero_pill_services", widget: "string", required: true, hint: "Services link in floating pill menu"}
+          - {label: "Benefit 1 - Title", name: "benefits_title_1", widget: "string", required: true, hint: "First benefit card title"}
+          - {label: "Benefit 1 - Description", name: "benefits_desc_1", widget: "text", required: true, hint: "First benefit card description"}
+          - {label: "Benefit 2 - Title", name: "benefits_title_2", widget: "string", required: true, hint: "Second benefit card title"}
+          - {label: "Benefit 2 - Description", name: "benefits_desc_2", widget: "text", required: true, hint: "Second benefit card description"}
+          - {label: "Benefit 3 - Title", name: "benefits_title_3", widget: "string", required: true, hint: "Third benefit card title"}
+          - {label: "Benefit 3 - Description", name: "benefits_desc_3", widget: "text", required: true, hint: "Third benefit card description"}
+          - {label: "Mission Title", name: "mission_title", widget: "string", required: true, hint: "Main heading for mission section"}
+          - {label: "Mission Paragraph 1", name: "mission_para_1", widget: "text", required: true, hint: "First paragraph of mission content"}
+          - {label: "Mission Paragraph 2", name: "mission_para_2", widget: "text", required: true, hint: "Second paragraph of mission content"}
+          - {label: "Mission Bullet 1", name: "mission_bullet_1", widget: "string", required: true, hint: "First bullet point"}
+          - {label: "Mission Bullet 2", name: "mission_bullet_2", widget: "string", required: true, hint: "Second bullet point"}
+          - {label: "Mission Bullet 3", name: "mission_bullet_3", widget: "string", required: true, hint: "Third bullet point"}
+          - {label: "Services Heading", name: "services_heading", widget: "string", required: true, hint: "Heading above services grid"}
+          - {label: "Events Heading", name: "events_heading", widget: "string", required: true, hint: "Heading above events grid"}
+          - {label: "Testimonials Heading", name: "testimonials_heading", widget: "string", required: true, hint: "Heading above testimonials"}
+          - {label: "CTA Title", name: "cta_title", widget: "string", required: true, hint: "Main heading for final CTA section"}
+          - {label: "CTA Description", name: "cta_description", widget: "text", required: true, hint: "Description text in CTA section"}
+          - {label: "CTA Primary Button", name: "cta_button_primary", widget: "string", required: true, hint: "Text for primary CTA button"}
+          - {label: "CTA Secondary Button", name: "cta_button_secondary", widget: "string", required: true, hint: "Text for secondary CTA button"}
+          - {label: "Footer Tagline", name: "footer_tagline", widget: "text", required: true, hint: "Footer tagline/description"}
+          - {label: "Footer Address Line 1", name: "footer_address_line1", widget: "string", required: true, hint: "First line of address"}
+          - {label: "Footer Address Line 2", name: "footer_address_line2", widget: "string", required: true, hint: "Second line of address"}
+          - {label: "Footer Email", name: "footer_email", widget: "string", required: true, hint: "Contact email address"}
+          - {label: "Footer Phone", name: "footer_phone", widget: "string", required: true, hint: "Contact phone number"}
+          - {label: "Footer Copyright", name: "footer_copyright", widget: "string", required: true, hint: "Copyright notice"}
+          - {label: "Footer Made With", name: "footer_made_with", widget: "string", required: true, hint: "Footer attribution text"}
 
   - name: "services"
     label: "Services"
