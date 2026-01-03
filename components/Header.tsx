@@ -16,8 +16,8 @@ const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
 
         <nav className="hidden md:flex items-center space-x-8 text-xs font-bold uppercase tracking-[0.2em] text-[#143D30]">
           <a href="#benefits" className="hover:opacity-60 transition-opacity">{SITE_SETTINGS.nav_benefits}</a>
-          <a href="#mission" className="hover:opacity-60 transition-opacity">{SITE_SETTINGS.nav_mission}</a>
           <a href="#services" className="hover:opacity-60 transition-opacity">{SITE_SETTINGS.nav_services}</a>
+          <a href="#events" className="hover:opacity-60 transition-opacity">{SITE_SETTINGS.events_heading}</a>
         </nav>
 
         <button

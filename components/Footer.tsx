@@ -26,7 +26,6 @@ const Footer: React.FC = () => {
             <h5 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-6 opacity-40">Navigate</h5>
             <ul className="space-y-4 text-xs font-bold uppercase tracking-widest">
               <li><a href="#benefits" className="hover:underline">{SITE_SETTINGS.nav_benefits}</a></li>
-              <li><a href="#mission" className="hover:underline">{SITE_SETTINGS.nav_mission}</a></li>
               <li><a href="#services" className="hover:underline">{SITE_SETTINGS.nav_services}</a></li>
               <li><a href="#events" className="hover:underline">{SITE_SETTINGS.events_heading}</a></li>
             </ul>

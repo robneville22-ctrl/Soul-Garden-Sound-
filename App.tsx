@@ -33,7 +33,7 @@ const App: React.FC = () => {
           <div className="container mx-auto px-4">
             <h2 className="text-4xl md:text-5xl font-serif text-center mb-12">{SITE_SETTINGS.services_heading}</h2>
             <ServicesGrid />
-            <div className="mt-20">
+            <div id="events" className="mt-20">
               <h3 className="text-3xl font-serif text-center mb-12">{SITE_SETTINGS.events_heading}</h3>
               <EventsGrid />
             </div>
