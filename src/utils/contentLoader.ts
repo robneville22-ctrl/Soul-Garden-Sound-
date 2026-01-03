@@ -77,22 +77,37 @@ export function loadServices(): Service[] {
   try {
     // Check if serviceFiles is empty or not loaded
     if (!serviceFiles || Object.keys(serviceFiles).length === 0) {
-      console.warn('No service files found');
+      console.warn('No service files found. Available keys:', Object.keys(serviceFiles || {}));
       return [];
     }
 
+    console.log('Loading services, found files:', Object.keys(serviceFiles).length);
+
     return Object.entries(serviceFiles).map(([path, content]) => {
       try {
-        // Ensure content is a string
-        const contentString = typeof content === 'string' ? content : String(content || '');
+        // Handle different content types - might be a module or string
+        let contentString: string;
+        
+        if (typeof content === 'string') {
+          contentString = content;
+        } else if (content && typeof content === 'object' && 'default' in content) {
+          // Handle module exports
+          contentString = String(content.default || '');
+        } else {
+          contentString = String(content || '');
+        }
         
         if (!contentString || contentString.trim().length === 0) {
-          throw new Error('Empty content');
+          throw new Error(`Empty content for ${path}`);
         }
 
         const { data } = matter(contentString);
         const id = path.split('/').pop()?.replace('.md', '') || '';
         const body = extractBody(contentString);
+        
+        if (!data.title) {
+          console.warn(`Service ${id} missing title`);
+        }
         
         return {
           id,
@@ -107,7 +122,7 @@ export function loadServices(): Service[] {
       } catch (error) {
         console.error(`Error loading service from ${path}:`, error);
         console.error('Content type:', typeof content);
-        console.error('Content preview:', String(content).substring(0, 100));
+        console.error('Content value:', content);
         // Return a safe default
         return {
           id: path.split('/').pop()?.replace('.md', '') || 'unknown',
@@ -131,21 +146,36 @@ export function loadEvents(): WellnessEvent[] {
   try {
     // Check if eventFiles is empty or not loaded
     if (!eventFiles || Object.keys(eventFiles).length === 0) {
-      console.warn('No event files found');
+      console.warn('No event files found. Available keys:', Object.keys(eventFiles || {}));
       return [];
     }
 
+    console.log('Loading events, found files:', Object.keys(eventFiles).length);
+
     return Object.entries(eventFiles).map(([path, content]) => {
       try {
-        // Ensure content is a string
-        const contentString = typeof content === 'string' ? content : String(content || '');
+        // Handle different content types - might be a module or string
+        let contentString: string;
+        
+        if (typeof content === 'string') {
+          contentString = content;
+        } else if (content && typeof content === 'object' && 'default' in content) {
+          // Handle module exports
+          contentString = String(content.default || '');
+        } else {
+          contentString = String(content || '');
+        }
         
         if (!contentString || contentString.trim().length === 0) {
-          throw new Error('Empty content');
+          throw new Error(`Empty content for ${path}`);
         }
 
         const { data } = matter(contentString);
         const id = path.split('/').pop()?.replace('.md', '') || '';
+        
+        if (!data.title) {
+          console.warn(`Event ${id} missing title`);
+        }
         
         return {
           id,
@@ -160,7 +190,7 @@ export function loadEvents(): WellnessEvent[] {
       } catch (error) {
         console.error(`Error loading event from ${path}:`, error);
         console.error('Content type:', typeof content);
-        console.error('Content preview:', String(content).substring(0, 100));
+        console.error('Content value:', content);
         return {
           id: path.split('/').pop()?.replace('.md', '') || 'unknown',
           name: 'Error loading event',
