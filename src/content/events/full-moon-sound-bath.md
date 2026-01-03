@@ -1,6 +1,6 @@
 ---
 title: Full Moon Sound Bath Journey
-date: 2025-07-20T19:00:00
+date: 2026-01-21T21:00:00
 time: 7:00 PM
 location: Austin Studio, Central Park
 price: $45
