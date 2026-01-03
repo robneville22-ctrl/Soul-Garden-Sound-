@@ -22,6 +22,16 @@ display_url: https://soul-garden-sound.vercel.app
 locale: "en"
 
 collections:
+  - name: "site_settings"
+    label: "Site Settings"
+    files:
+      - label: "Homepage Settings"
+        name: "homepage"
+        file: "src/content/site-settings.md"
+        fields:
+          - {label: "Hero Image", name: "hero_image", widget: "image", required: true, hint: "Main image displayed below 'Start Your Journey' button"}
+          - {label: "Hero Image Alt Text", name: "hero_image_alt", widget: "string", required: false, default: "Serene Wellness Atmosphere", hint: "Description of the hero image for accessibility"}
+
   - name: "services"
     label: "Services"
     folder: "src/content/services"

@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { SITE_SETTINGS } from '../constants';
 
 interface HeroProps {
   onOpenBooking: () => void;
@@ -28,8 +29,8 @@ const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
         <div className="relative inline-block mt-8">
           <div className="rounded-[40px] overflow-hidden shadow-2xl max-w-3xl mx-auto border-8 border-white/40 bg-[#F3E8FF]">
             <img
-              src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=1600"
-              alt="Serene Wellness Atmosphere"
+              src={SITE_SETTINGS.hero_image}
+              alt={SITE_SETTINGS.hero_image_alt}
               className="w-full h-auto object-cover max-h-[600px] transition-opacity duration-1000"
               onLoad={(e) => (e.currentTarget.style.opacity = '1')}
               style={{ opacity: 0 }}

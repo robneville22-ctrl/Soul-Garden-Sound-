@@ -1,10 +1,11 @@
 import matter from 'gray-matter';
-import { Service, WellnessEvent, Testimonial } from '../types';
+import { Service, WellnessEvent, Testimonial, SiteSettings } from '../types';
 
 // Import all markdown files
 const serviceFiles = import.meta.glob('../content/services/*.md', { eager: true, query: '?raw', import: 'default' });
 const eventFiles = import.meta.glob('../content/events/*.md', { eager: true, query: '?raw', import: 'default' });
 const testimonialFiles = import.meta.glob('../content/testimonials/*.md', { eager: true, query: '?raw', import: 'default' });
+const siteSettingsFile = import.meta.glob('../content/site-settings.md', { eager: true, query: '?raw', import: 'default' });
 
 /**
  * Safely parse price string to number
@@ -154,5 +155,29 @@ export function loadTestimonials(): Testimonial[] {
   } catch (error) {
     console.error('Error loading testimonials:', error);
     return [];
+  }
+}
+
+export function loadSiteSettings(): SiteSettings {
+  try {
+    const fileEntry = Object.entries(siteSettingsFile)[0];
+    if (!fileEntry) {
+      throw new Error('Site settings file not found');
+    }
+    
+    const [, content] = fileEntry;
+    const { data } = matter(content);
+    
+    return {
+      hero_image: data.hero_image || 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=1600',
+      hero_image_alt: data.hero_image_alt || 'Serene Wellness Atmosphere'
+    };
+  } catch (error) {
+    console.error('Error loading site settings:', error);
+    // Return default values
+    return {
+      hero_image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=1600',
+      hero_image_alt: 'Serene Wellness Atmosphere'
+    };
   }
 }

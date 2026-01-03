@@ -27,3 +27,8 @@ export interface Testimonial {
   text: string;
   role: string;
 }
+
+export interface SiteSettings {
+  hero_image: string;
+  hero_image_alt: string;
+}
