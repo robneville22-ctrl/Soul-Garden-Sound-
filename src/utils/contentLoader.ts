@@ -2,30 +2,30 @@ import matter from 'gray-matter';
 import { Service, WellnessEvent, Testimonial, SiteSettings } from '../types';
 
 // Import all markdown files
-// Using the newer Vite syntax for raw imports
+// Try both old and new syntax for compatibility
 const serviceFiles = import.meta.glob('../content/services/*.md', { 
   eager: true, 
   query: '?raw',
   import: 'default'
-}) as Record<string, string>;
+}) as Record<string, any>;
 
 const eventFiles = import.meta.glob('../content/events/*.md', { 
   eager: true, 
   query: '?raw',
   import: 'default'
-}) as Record<string, string>;
+}) as Record<string, any>;
 
 const testimonialFiles = import.meta.glob('../content/testimonials/*.md', { 
   eager: true, 
   query: '?raw',
   import: 'default'
-}) as Record<string, string>;
+}) as Record<string, any>;
 
 const siteSettingsFile = import.meta.glob('../content/site-settings.md', { 
   eager: true, 
   query: '?raw',
   import: 'default'
-}) as Record<string, string>;
+}) as Record<string, any>;
 
 /**
  * Safely parse price string to number
@@ -159,15 +159,36 @@ export function loadEvents(): WellnessEvent[] {
         
         if (typeof content === 'string') {
           contentString = content;
-        } else if (content && typeof content === 'object' && 'default' in content) {
-          // Handle module exports
-          contentString = String(content.default || '');
+        } else if (content && typeof content === 'object') {
+          // Handle module exports - try default, then the object itself
+          if ('default' in content) {
+            contentString = typeof content.default === 'string' 
+              ? content.default 
+              : String(content.default || '');
+          } else {
+            // Try to stringify the object
+            contentString = JSON.stringify(content);
+          }
         } else {
           contentString = String(content || '');
         }
         
+        // Remove any JSON wrapping if present
+        if (contentString.startsWith('"') && contentString.endsWith('"')) {
+          try {
+            contentString = JSON.parse(contentString);
+          } catch (e) {
+            // Not JSON, keep as is
+          }
+        }
+        
         if (!contentString || contentString.trim().length === 0) {
           throw new Error(`Empty content for ${path}`);
+        }
+        
+        // Ensure it starts with frontmatter
+        if (!contentString.includes('---')) {
+          throw new Error(`Invalid markdown format for ${path}`);
         }
 
         const { data } = matter(contentString);
