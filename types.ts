@@ -86,4 +86,7 @@ export interface SiteSettings {
   footer_phone: string;
   footer_copyright: string;
   footer_made_with: string;
+  
+  // Instagram
+  instagram_handle: string;
 }

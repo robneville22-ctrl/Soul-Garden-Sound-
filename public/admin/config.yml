@@ -65,6 +65,7 @@ collections:
           - {label: "Footer Phone", name: "footer_phone", widget: "string", required: true, hint: "Contact phone number"}
           - {label: "Footer Copyright", name: "footer_copyright", widget: "string", required: true, hint: "Copyright notice"}
           - {label: "Footer Made With", name: "footer_made_with", widget: "string", required: true, hint: "Footer attribution text"}
+          - {label: "Instagram Handle", name: "instagram_handle", widget: "string", required: true, hint: "Instagram username (without @) for booking redirect"}
 
   - name: "services"
     label: "Services"

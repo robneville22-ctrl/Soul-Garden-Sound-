@@ -45,4 +45,5 @@ nav_services: Services
 events_heading: Upcoming Events
 hero_pill_benefits: Our Benefits
 hero_pill_services: Services
+instagram_handle: soulgardensound
 ---

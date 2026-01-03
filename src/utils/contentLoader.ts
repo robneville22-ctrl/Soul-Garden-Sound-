@@ -413,7 +413,8 @@ export function loadSiteSettings(): SiteSettings {
     footer_email: 'hello@soulgardensound.com',
     footer_phone: '(512) 555-0123',
     footer_copyright: '© 2024 Soul Garden Sound. All rights reserved.',
-    footer_made_with: 'Made with ❤️ by your friend'
+    footer_made_with: 'Made with ❤️ by your friend',
+    instagram_handle: 'soulgardensound'
   };
 
   try {
