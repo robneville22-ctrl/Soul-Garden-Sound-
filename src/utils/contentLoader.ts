@@ -90,15 +90,36 @@ export function loadServices(): Service[] {
         
         if (typeof content === 'string') {
           contentString = content;
-        } else if (content && typeof content === 'object' && 'default' in content) {
-          // Handle module exports
-          contentString = String(content.default || '');
+        } else if (content && typeof content === 'object') {
+          // Handle module exports - try default, then the object itself
+          if ('default' in content) {
+            contentString = typeof content.default === 'string' 
+              ? content.default 
+              : String(content.default || '');
+          } else {
+            // Try to stringify the object
+            contentString = JSON.stringify(content);
+          }
         } else {
           contentString = String(content || '');
         }
         
+        // Remove any JSON wrapping if present
+        if (contentString.startsWith('"') && contentString.endsWith('"')) {
+          try {
+            contentString = JSON.parse(contentString);
+          } catch (e) {
+            // Not JSON, keep as is
+          }
+        }
+        
         if (!contentString || contentString.trim().length === 0) {
           throw new Error(`Empty content for ${path}`);
+        }
+        
+        // Ensure it starts with frontmatter
+        if (!contentString.includes('---')) {
+          throw new Error(`Invalid markdown format for ${path}`);
         }
 
         const { data } = matter(contentString);
