@@ -2,10 +2,30 @@ import matter from 'gray-matter';
 import { Service, WellnessEvent, Testimonial, SiteSettings } from '../types';
 
 // Import all markdown files
-const serviceFiles = import.meta.glob('../content/services/*.md', { eager: true, query: '?raw', import: 'default' });
-const eventFiles = import.meta.glob('../content/events/*.md', { eager: true, query: '?raw', import: 'default' });
-const testimonialFiles = import.meta.glob('../content/testimonials/*.md', { eager: true, query: '?raw', import: 'default' });
-const siteSettingsFile = import.meta.glob('../content/site-settings.md', { eager: true, query: '?raw', import: 'default' });
+// Using the newer Vite syntax for raw imports
+const serviceFiles = import.meta.glob('../content/services/*.md', { 
+  eager: true, 
+  query: '?raw',
+  import: 'default'
+}) as Record<string, string>;
+
+const eventFiles = import.meta.glob('../content/events/*.md', { 
+  eager: true, 
+  query: '?raw',
+  import: 'default'
+}) as Record<string, string>;
+
+const testimonialFiles = import.meta.glob('../content/testimonials/*.md', { 
+  eager: true, 
+  query: '?raw',
+  import: 'default'
+}) as Record<string, string>;
+
+const siteSettingsFile = import.meta.glob('../content/site-settings.md', { 
+  eager: true, 
+  query: '?raw',
+  import: 'default'
+}) as Record<string, string>;
 
 /**
  * Safely parse price string to number
@@ -55,11 +75,24 @@ function formatEventDate(date: string | Date | undefined, time?: string): string
 
 export function loadServices(): Service[] {
   try {
+    // Check if serviceFiles is empty or not loaded
+    if (!serviceFiles || Object.keys(serviceFiles).length === 0) {
+      console.warn('No service files found');
+      return [];
+    }
+
     return Object.entries(serviceFiles).map(([path, content]) => {
       try {
-        const { data } = matter(content);
+        // Ensure content is a string
+        const contentString = typeof content === 'string' ? content : String(content || '');
+        
+        if (!contentString || contentString.trim().length === 0) {
+          throw new Error('Empty content');
+        }
+
+        const { data } = matter(contentString);
         const id = path.split('/').pop()?.replace('.md', '') || '';
-        const body = extractBody(content);
+        const body = extractBody(contentString);
         
         return {
           id,
@@ -73,6 +106,8 @@ export function loadServices(): Service[] {
         };
       } catch (error) {
         console.error(`Error loading service from ${path}:`, error);
+        console.error('Content type:', typeof content);
+        console.error('Content preview:', String(content).substring(0, 100));
         // Return a safe default
         return {
           id: path.split('/').pop()?.replace('.md', '') || 'unknown',
@@ -94,9 +129,22 @@ export function loadServices(): Service[] {
 
 export function loadEvents(): WellnessEvent[] {
   try {
+    // Check if eventFiles is empty or not loaded
+    if (!eventFiles || Object.keys(eventFiles).length === 0) {
+      console.warn('No event files found');
+      return [];
+    }
+
     return Object.entries(eventFiles).map(([path, content]) => {
       try {
-        const { data } = matter(content);
+        // Ensure content is a string
+        const contentString = typeof content === 'string' ? content : String(content || '');
+        
+        if (!contentString || contentString.trim().length === 0) {
+          throw new Error('Empty content');
+        }
+
+        const { data } = matter(contentString);
         const id = path.split('/').pop()?.replace('.md', '') || '';
         
         return {
@@ -111,6 +159,8 @@ export function loadEvents(): WellnessEvent[] {
         };
       } catch (error) {
         console.error(`Error loading event from ${path}:`, error);
+        console.error('Content type:', typeof content);
+        console.error('Content preview:', String(content).substring(0, 100));
         return {
           id: path.split('/').pop()?.replace('.md', '') || 'unknown',
           name: 'Error loading event',
