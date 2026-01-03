@@ -1,4 +1,4 @@
-import matter from 'gray-matter';
+// Custom frontmatter parser to avoid CSP eval() issues with gray-matter
 import { Service, WellnessEvent, Testimonial, SiteSettings } from '../types';
 
 // Import all markdown files
@@ -42,6 +42,46 @@ function parsePrice(price: string | undefined): number {
   const cleaned = price.toString().replace(/[$,\s]/g, '');
   const parsed = parseInt(cleaned, 10);
   return isNaN(parsed) ? 0 : parsed;
+}
+
+/**
+ * Parse frontmatter from markdown content
+ * Simple YAML parser that doesn't use eval()
+ */
+function parseFrontmatter(content: string): { data: Record<string, any>, content: string } {
+  const parts = content.split('---');
+  
+  if (parts.length < 3) {
+    return { data: {}, content: content.trim() };
+  }
+  
+  const frontmatter = parts[1].trim();
+  const body = parts.slice(2).join('---').trim();
+  
+  // Simple YAML parser for our use case
+  const data: Record<string, any> = {};
+  const lines = frontmatter.split('\n');
+  
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    
+    const colonIndex = trimmed.indexOf(':');
+    if (colonIndex === -1) continue;
+    
+    const key = trimmed.substring(0, colonIndex).trim();
+    let value = trimmed.substring(colonIndex + 1).trim();
+    
+    // Remove quotes if present
+    if ((value.startsWith('"') && value.endsWith('"')) || 
+        (value.startsWith("'") && value.endsWith("'"))) {
+      value = value.slice(1, -1);
+    }
+    
+    data[key] = value;
+  }
+  
+  return { data, content: body };
 }
 
 /**
@@ -128,7 +168,7 @@ export function loadServices(): Service[] {
           throw new Error(`Invalid markdown format for ${path}`);
         }
 
-        const { data } = matter(contentString);
+        const { data } = parseFrontmatter(contentString);
         const id = path.split('/').pop()?.replace('.md', '') || '';
         const body = extractBody(contentString);
         
@@ -218,7 +258,7 @@ export function loadEvents(): WellnessEvent[] {
           throw new Error(`Invalid markdown format for ${path}`);
         }
 
-        const { data } = matter(contentString);
+        const { data } = parseFrontmatter(contentString);
         const id = path.split('/').pop()?.replace('.md', '') || '';
         
         if (!data.title) {
@@ -259,9 +299,52 @@ export function loadEvents(): WellnessEvent[] {
 
 export function loadTestimonials(): Testimonial[] {
   try {
+    // Check if testimonialFiles is empty or not loaded
+    if (!testimonialFiles || Object.keys(testimonialFiles).length === 0) {
+      console.warn('No testimonial files found. Available keys:', Object.keys(testimonialFiles || {}));
+      return [];
+    }
+
     return Object.entries(testimonialFiles).map(([path, content]) => {
       try {
-        const { data } = matter(content);
+        // Handle different content types - might be a module or string
+        let contentString: string;
+        
+        if (typeof content === 'string') {
+          contentString = content;
+        } else if (content && typeof content === 'object') {
+          // Handle module exports - try default, then the object itself
+          if ('default' in content) {
+            contentString = typeof content.default === 'string' 
+              ? content.default 
+              : String(content.default || '');
+          } else {
+            // Try to stringify the object
+            contentString = JSON.stringify(content);
+          }
+        } else {
+          contentString = String(content || '');
+        }
+        
+        // Remove any JSON wrapping if present
+        if (contentString.startsWith('"') && contentString.endsWith('"')) {
+          try {
+            contentString = JSON.parse(contentString);
+          } catch (e) {
+            // Not JSON, keep as is
+          }
+        }
+        
+        if (!contentString || contentString.trim().length === 0) {
+          throw new Error(`Empty content for ${path}`);
+        }
+        
+        // Ensure it starts with frontmatter
+        if (!contentString.includes('---')) {
+          throw new Error(`Invalid markdown format for ${path}`);
+        }
+
+        const { data } = parseFrontmatter(contentString);
         const id = path.split('/').pop()?.replace('.md', '') || '';
         
         return {
@@ -272,6 +355,8 @@ export function loadTestimonials(): Testimonial[] {
         };
       } catch (error) {
         console.error(`Error loading testimonial from ${path}:`, error);
+        console.error('Content type:', typeof content);
+        console.error('Content value:', content);
         return {
           id: path.split('/').pop()?.replace('.md', '') || 'unknown',
           name: 'Anonymous',
@@ -294,7 +379,29 @@ export function loadSiteSettings(): SiteSettings {
     }
     
     const [, content] = fileEntry;
-    const { data } = matter(content);
+    
+    // Handle different content types
+    let contentString: string;
+    if (typeof content === 'string') {
+      contentString = content;
+    } else if (content && typeof content === 'object' && 'default' in content) {
+      contentString = typeof content.default === 'string' 
+        ? content.default 
+        : String(content.default || '');
+    } else {
+      contentString = String(content || '');
+    }
+    
+    // Remove any JSON wrapping if present
+    if (contentString.startsWith('"') && contentString.endsWith('"')) {
+      try {
+        contentString = JSON.parse(contentString);
+      } catch (e) {
+        // Not JSON, keep as is
+      }
+    }
+    
+    const { data } = parseFrontmatter(contentString);
     
     return {
       hero_image: data.hero_image || 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=1600',
