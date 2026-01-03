@@ -1,23 +1,24 @@
 
 import React from 'react';
 import { Sparkles, Music, Users } from 'lucide-react';
+import { SITE_SETTINGS } from '../constants';
 
 const ValueProps: React.FC = () => {
   const values = [
     {
       icon: <Music className="w-8 h-8" />,
-      title: "Vibrational Healing",
-      description: "Sound frequencies that restore cellular balance and calm the nervous system."
+      title: SITE_SETTINGS.benefits_title_1,
+      description: SITE_SETTINGS.benefits_desc_1
     },
     {
       icon: <Sparkles className="w-8 h-8" />,
-      title: "Energy Clearing",
-      description: "Remove blockages through targeted Reiki and intuitive energetic alignment."
+      title: SITE_SETTINGS.benefits_title_2,
+      description: SITE_SETTINGS.benefits_desc_2
     },
     {
       icon: <Users className="w-8 h-8" />,
-      title: "Community Connection",
-      description: "Safe spaces to heal alongside others in our monthly group ceremonies."
+      title: SITE_SETTINGS.benefits_title_3,
+      description: SITE_SETTINGS.benefits_desc_3
     }
   ];
 

@@ -12,17 +12,17 @@ const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto mb-12 animate-fade-in-up">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif leading-tight mb-6">
-            Realign Your Energy, <br />
-            <span className="italic">Reclaim Your Peace.</span>
+            {SITE_SETTINGS.hero_headline_line1} <br />
+            <span className="italic">{SITE_SETTINGS.hero_headline_line2}</span>
           </h1>
           <p className="text-lg md:text-xl font-light tracking-wide text-[#143D30]/80 max-w-2xl mx-auto mb-8">
-            Personalized Reiki healing and immersive sound baths in the heart of Austin.
+            {SITE_SETTINGS.hero_description}
           </p>
           <button
             onClick={onOpenBooking}
             className="bg-[#143D30] text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-[#1b4e3d] transition-all transform hover:scale-105 active:scale-95 shadow-xl"
           >
-            Start Your Journey
+            {SITE_SETTINGS.hero_button}
           </button>
         </div>
 
@@ -40,11 +40,11 @@ const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
           {/* Floating Pill Menu */}
           <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-full max-w-md">
             <div className="bg-white/80 backdrop-blur-xl border border-white/40 rounded-full px-8 py-5 shadow-2xl flex justify-between items-center text-[10px] font-bold uppercase tracking-[0.15em]">
-              <a href="#benefits" className="hover:text-[#D8B4FE] transition-colors">Our Benefits</a>
+              <a href="#benefits" className="hover:text-[#D8B4FE] transition-colors">{SITE_SETTINGS.hero_pill_benefits}</a>
               <span className="w-1 h-1 rounded-full bg-[#143D30]/20"></span>
-              <a href="#mission" className="hover:text-[#D8B4FE] transition-colors">Mission</a>
+              <a href="#mission" className="hover:text-[#D8B4FE] transition-colors">{SITE_SETTINGS.hero_pill_mission}</a>
               <span className="w-1 h-1 rounded-full bg-[#143D30]/20"></span>
-              <a href="#services" className="hover:text-[#D8B4FE] transition-colors">Services</a>
+              <a href="#services" className="hover:text-[#D8B4FE] transition-colors">{SITE_SETTINGS.hero_pill_services}</a>
             </div>
           </div>
         </div>

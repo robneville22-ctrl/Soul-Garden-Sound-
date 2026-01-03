@@ -1,13 +1,13 @@
 
 import React from 'react';
-import { TESTIMONIALS } from '../constants';
+import { TESTIMONIALS, SITE_SETTINGS } from '../constants';
 import { Quote } from 'lucide-react';
 
 const SocialProof: React.FC = () => {
   return (
     <section className="py-24">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-serif text-center mb-16">The Experience</h2>
+        <h2 className="text-4xl md:text-5xl font-serif text-center mb-16">{SITE_SETTINGS.testimonials_heading}</h2>
         <div className="grid md:grid-cols-3 gap-8">
           {TESTIMONIALS.map((t) => (
             <div key={t.id} className="p-8 rounded-[2rem] bg-white border border-[#143D30]/5 flex flex-col">

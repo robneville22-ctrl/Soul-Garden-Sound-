@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { SITE_SETTINGS } from '../constants';
 
 const DetailedValue: React.FC = () => {
   return (
@@ -25,28 +26,35 @@ const DetailedValue: React.FC = () => {
           </div>
           <div className="w-full md:w-1/2 space-y-8">
             <h2 className="text-4xl md:text-5xl font-serif leading-tight text-[#143D30]">
-              Why Sound & <br />Energy Work?
+              {SITE_SETTINGS.mission_title.includes(' & ') ? (
+                <>
+                  {SITE_SETTINGS.mission_title.split(' & ')[0]} <br />
+                  & {SITE_SETTINGS.mission_title.split(' & ')[1]}
+                </>
+              ) : (
+                SITE_SETTINGS.mission_title
+              )}
             </h2>
             <div className="space-y-6 text-[#143D30]/80 font-light leading-relaxed">
               <p>
-                In the modern world, our bodies are constantly bombarded by external stressors that disrupt our natural frequencies. This can manifest as anxiety, fatigue, or physical pain.
+                {SITE_SETTINGS.mission_para_1}
               </p>
               <p>
-                By combining the ancient wisdom of Reiki with the scientific principles of sound therapy, we create an environment where your body's innate healing mechanisms can thrive.
+                {SITE_SETTINGS.mission_para_2}
               </p>
               <div className="pt-4">
                 <ul className="space-y-4">
                   <li className="flex items-center gap-4">
                     <span className="w-2 h-2 rounded-full bg-[#143D30]"></span>
-                    <span>Reduce cortisol levels naturally</span>
+                    <span>{SITE_SETTINGS.mission_bullet_1}</span>
                   </li>
                   <li className="flex items-center gap-4">
                     <span className="w-2 h-2 rounded-full bg-[#143D30]"></span>
-                    <span>Improve sleep quality and duration</span>
+                    <span>{SITE_SETTINGS.mission_bullet_2}</span>
                   </li>
                   <li className="flex items-center gap-4">
                     <span className="w-2 h-2 rounded-full bg-[#143D30]"></span>
-                    <span>Emotional release and mental clarity</span>
+                    <span>{SITE_SETTINGS.mission_bullet_3}</span>
                   </li>
                 </ul>
               </div>

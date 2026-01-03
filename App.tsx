@@ -9,6 +9,7 @@ import ServicesGrid from './components/ServicesGrid';
 import EventsGrid from './components/EventsGrid';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
+import { SITE_SETTINGS } from './constants';
 
 const App: React.FC = () => {
   const [showBooking, setShowBooking] = useState(false);
@@ -30,10 +31,10 @@ const App: React.FC = () => {
 
         <div id="services" className="py-20 bg-white/30 backdrop-blur-sm">
           <div className="container mx-auto px-4">
-            <h2 className="text-4xl md:text-5xl font-serif text-center mb-12">Our Offerings</h2>
+            <h2 className="text-4xl md:text-5xl font-serif text-center mb-12">{SITE_SETTINGS.services_heading}</h2>
             <ServicesGrid />
             <div className="mt-20">
-              <h3 className="text-3xl font-serif text-center mb-12">Upcoming Events</h3>
+              <h3 className="text-3xl font-serif text-center mb-12">{SITE_SETTINGS.events_heading}</h3>
               <EventsGrid />
             </div>
           </div>
